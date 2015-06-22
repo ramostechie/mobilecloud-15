@@ -1,5 +1,6 @@
 package vandy.mooc.provider;
 
+import vandy.mooc.R;
 import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -23,23 +24,23 @@ public class CharacterContract {
         Uri.parse("content://"
                   + CONTENT_AUTHORITY);
 
-    /*
-     * Columns
-     */
-
     /**
      * Possible paths (appended to base content URI for possible
-     * URI's).  For instance, content://vandy.mooc/character_map/ is a
-     * valid path for looking at Character data.  Conversely,
+     * URI's).  For instance, content://vandy.mooc/character_table/ is
+     * a valid path for looking at Character data.  Conversely,
      * content://vandy.mooc/givemeroot/ will fail, as the
      * ContentProvider hasn't been given any information on what to do
      * with "givemeroot".
      */
     public static final String PATH_CHARACTER =
-        CharacterEntry.MAP_NAME;
+        CharacterEntry.TABLE_NAME;
+
+    /*
+     * Columns
+     */
 
     /**
-     * Inner class that defines the table contents of the Acronym
+     * Inner class that defines the table contents of the Hobbit
      * table.
      */
     public static final class CharacterEntry implements BaseColumns {
@@ -55,7 +56,7 @@ public class CharacterContract {
          * When the Cursor returned for a given URI by the
          * ContentProvider contains 0..x items.
          */
-        public static final String CONTENT_TYPE =
+        public static final String CONTENT_ITEMS_TYPE =
             "vnd.android.cursor.dir/"
             + CONTENT_AUTHORITY
             + "/" 
@@ -72,18 +73,31 @@ public class CharacterContract {
             + PATH_CHARACTER;
 
         /**
-         * Name of the database table.
+         * Columns to display.
          */
-        public static final String MAP_NAME =
-            "character_map";
+        public static final String sColumnsToDisplay [] = 
+            new String[] {
+            CharacterContract.CharacterEntry._ID,
+            CharacterContract.CharacterEntry.COLUMN_NAME,
+            CharacterContract.CharacterEntry.COLUMN_RACE
+        };
+    
+        /**
+         * Resource Ids of the columns to display.
+         */
+        public static final int[] sColumnResIds = 
+            new int[] {
+            R.id.idString, 	
+            R.id.name, 
+            R.id.race
+        };
 
         /**
-         * Selection clause to find rows with given acronym.
+         * Name of the database table.
          */
-        public static final String SELECTION_CHARACTER =
-            CharacterEntry.COLUMN_NAME
-            + " = ?";
-    	
+        public static final String TABLE_NAME =
+            "character_table";
+
         /**
          * Columns to store data.
          */
